@@ -1,0 +1,16 @@
+
+.mxproject
+.mxproject
+*.ioc
+.mxproject
+Debug/makefile
+*.list
+*.bin
+*.elf
+*.list
+*.su
+*.su
+*.mk
+.mxproject
+*.ioc
+*.ioc
