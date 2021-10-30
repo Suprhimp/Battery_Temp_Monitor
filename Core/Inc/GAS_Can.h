@@ -16,55 +16,37 @@ typedef union{
 	uint8_t TxData[8];
 	uint8_t RxData[8];
 	struct{
-		unsigned int sensor0 : 12;
-		unsigned int sensor1 : 12;
-		unsigned int sensor2 : 12;
-		unsigned int sensor3 : 12;
-		unsigned int sensor4 : 12;
-		unsigned int reserved: 4;
+		unsigned int HighestTemp : 12;
+		unsigned int LowestTemp : 12;
+		unsigned int MeanTemp : 12;
+		unsigned int reserved : 12;
+		unsigned int reserved1 : 12;
+		unsigned int reserved2: 4;
 
 	}__attribute__((aligned(1),packed)) B;
 
-}stm32_msg_t;
+}BatteryTemp_t;
 
-typedef union
-{
+typedef union{
 	uint8_t TxData[8];
-	    struct{
-			unsigned int AMK_bReserve : 8;
-			unsigned int AMK_bSystemReady : 1;
-			unsigned int AMK_bSError : 1;
-			unsigned int AMK_bWarn : 1;
-			unsigned int AMK_bQuitDcOn : 1;
-			unsigned int AMK_bDcOn : 1;
-			unsigned int AMK_bQuitInverterOn : 1;
-			unsigned int AMK_bInverterOn : 1;
-			unsigned int AMK_bDerating : 1;
-	        int AMK_ActualVelocity : 16;
-	        int AMK_TorqueCurrent : 16;
-	        int AMK_MagnetizingCurrent : 16;
-	    }S;
-}amkActualValues1;
-
-typedef union
-{
 	uint8_t RxData[8];
-	    struct{
-			unsigned int AMK_bReserve1 : 8;
-			unsigned int AMK_bInverterOn : 1;
-			unsigned int AMK_bDcOn : 1;
-			unsigned int AMK_bEnable : 1;
-			unsigned int AMK_bErrorReset : 1;
-			unsigned int AMK_bReserve2 : 4;
-	        int AMK_TargetVelocity : 16;
-	        int AMK_TorqueLimitPositv : 16;
-	        int AMK_TorqueLimitNegativ : 16;
-	    }S;
-}amkSetpoint1;
+	struct{
+		uint8_t prechargeStateSignal1 ;
+		uint8_t prechargeStateSignal2 ;
+		uint8_t RelayContactSignal1   ;
+		uint8_t RelayContactSignal2	  ;
+		uint8_t RelayContactSignal3	  ;
+		uint8_t TsalSignal			  ;
+		uint8_t IMDStatusFrequency	  ;
+		uint8_t Reserved			  ;
 
-extern amkActualValues1 AMK_Actual_Values1;
-extern amkSetpoint1 AMK_Setpoint1;
-extern stm32_msg_t stm32_1;
+
+	}__attribute__((aligned(1),packed)) B;
+
+}BatteryDiagnose_t;
+
+extern BatteryTemp_t T_BatteryTemp;
+extern BatteryDiagnose_t R_BatteryDiagnose;
 
 extern void GAS_Can_init(void);
 

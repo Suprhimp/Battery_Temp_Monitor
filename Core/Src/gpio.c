@@ -44,29 +44,12 @@ void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-<<<<<<< Updated upstream
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-=======
->>>>>>> Stashed changes
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-<<<<<<< Updated upstream
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET);
-
-  /*Configure GPIO pins : PC13 PC14 PC15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-=======
   HAL_GPIO_WritePin(GPIOB, TEMP_OK_Pin|SPI_AD0_Pin|SPI_AD1_Pin|SPI_AD2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
@@ -74,7 +57,6 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, LED0_Pin|SPI3_CS_Pin, GPIO_PIN_RESET);
->>>>>>> Stashed changes
 
   /*Configure GPIO pins : PBPin PBPin PBPin PBPin */
   GPIO_InitStruct.Pin = TEMP_OK_Pin|SPI_AD0_Pin|SPI_AD1_Pin|SPI_AD2_Pin;
@@ -90,22 +72,12 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-<<<<<<< Updated upstream
-  /*Configure GPIO pins : PB8 PB9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-=======
   /*Configure GPIO pins : PAPin PAPin */
   GPIO_InitStruct.Pin = LED0_Pin|SPI3_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
->>>>>>> Stashed changes
 
 }
 

@@ -59,11 +59,6 @@
 extern DMA_HandleTypeDef hdma_adc1;
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
-<<<<<<< Updated upstream
-extern TIM_HandleTypeDef htim8;
-extern UART_HandleTypeDef huart1;
-=======
->>>>>>> Stashed changes
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -79,7 +74,6 @@ void NMI_Handler(void)
   /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
 
   /* USER CODE END NonMaskableInt_IRQn 0 */
-  HAL_RCC_NMI_IRQHandler();
   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
   while (1)
   {
@@ -208,33 +202,6 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-<<<<<<< Updated upstream
-  * @brief This function handles USART1 global interrupt.
-  */
-void USART1_IRQHandler(void)
-{
-  /* USER CODE BEGIN USART1_IRQn 0 */
-
-  /* USER CODE END USART1_IRQn 0 */
-  HAL_UART_IRQHandler(&huart1);
-  /* USER CODE BEGIN USART1_IRQn 1 */
-
-  /* USER CODE END USART1_IRQn 1 */
-}
-
-/**
-  * @brief This function handles TIM8 capture compare interrupt.
-  */
-void TIM8_CC_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM8_CC_IRQn 0 */
-
-  /* USER CODE END TIM8_CC_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim8);
-  /* USER CODE BEGIN TIM8_CC_IRQn 1 */
-
-  /* USER CODE END TIM8_CC_IRQn 1 */
-=======
   * @brief This function handles CAN1 RX0 interrupts.
   */
 void CAN1_RX0_IRQHandler(void)
@@ -260,7 +227,6 @@ void CAN1_RX1_IRQHandler(void)
   /* USER CODE BEGIN CAN1_RX1_IRQn 1 */
 
   /* USER CODE END CAN1_RX1_IRQn 1 */
->>>>>>> Stashed changes
 }
 
 /**

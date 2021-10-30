@@ -8,19 +8,19 @@
 #ifndef INC_GAS_SCHEDULER_H_
 #define INC_GAS_SCHEDULER_H_
 
-<<<<<<< Updated upstream
+
 #include "GAS_Can.h"
-#include "GAS_Vadc.h"
+
 #include "GAS_PWM.h"
-=======
 #include <stdint.h>
->>>>>>> Stashed changes
+
 
 typedef struct
 {
 	volatile uint8_t flag_1ms;
 	volatile uint8_t flag_10ms;
 	volatile uint8_t flag_100ms;
+	volatile uint8_t flag_300ms;
 	volatile uint8_t flag_1000ms;
 }Scheduler_task;
 

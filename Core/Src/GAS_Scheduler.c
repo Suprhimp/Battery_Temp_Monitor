@@ -14,7 +14,6 @@
 
 
 extern uint8_t canRx0Data[8];
-extern volatile uint16_t ValueOfADC[5];
 uint8_t pin_state;
 
 #define False 0
@@ -48,11 +47,8 @@ void GAS_Scheduler_init(void)
 	GAS_Can_init();
 
 //********PWM initialization********
-<<<<<<< Updated upstream
-	GAS_PWM_inputInit();
-	GAS_PWM_outputInit();
-=======
->>>>>>> Stashed changes
+
+
 
 }
 
@@ -60,44 +56,44 @@ void GAS_Scheduler_init(void)
 
 static inline __attribute__((always_inline)) void GAS_Scheduler_taskCounter_1ms(void)
 {
-<<<<<<< Updated upstream
-	GAS_Vadc_dmaIn();
-//	GAS_Vadc_getValue();
-//	GAS_Can_sendMessage();
-	GAS_PWM_changeOutput_ch1(ValueOfADC[0]);
-=======
+
+
+
 //	GAS_Can_sendMessage();
 
->>>>>>> Stashed changes
+
 }
 
 static inline __attribute__((always_inline)) void GAS_Scheduler_taskCounter_10ms(void)
 {
-<<<<<<< Updated upstream
 //	GAS_Can_sendMessage();
-=======
 
->>>>>>> Stashed changes
 }
 
-uint8_t Count100ms = 0;
+uint8_t Count300ms = 0;
+uint8_t CScount = 0;
 static inline __attribute__((always_inline)) void GAS_Scheduler_taskCounter_100ms(void)
 {
-	Count100ms += 1;
-	if (Count100ms >5){
-		GAS_BulkADC_run_100ms();
-		Count100ms = 0;
-	}
+	Count300ms += 1;
+	CScount+=1;
+//	if (Count300ms%2)
+//	GAS_BulkADC_select(CScount);
+//	else
+	GAS_BulkADC_run_100ms(CScount);
+
+	if(CScount>9)CScount=0;
+		Count300ms = 0;
+
+
+}
+
+static inline __attribute__((always_inline)) void GAS_Scheduler_taskCounter_300ms(void)
+{
 
 }
 static inline __attribute__((always_inline)) void GAS_Scheduler_taskCounter_1000ms(void)
 {
-<<<<<<< Updated upstream
-	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_14);
-		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_15);
-		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_10);
-=======
+
 	HAL_GPIO_TogglePin(LED0_GPIO_Port,LED0_Pin);
 	HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin);
 	HAL_GPIO_TogglePin(LED2_GPIO_Port,LED2_Pin);
@@ -105,7 +101,7 @@ static inline __attribute__((always_inline)) void GAS_Scheduler_taskCounter_1000
 #ifdef INVCON_TEST
 	InverterControl_test_1000ms();
 #endif
->>>>>>> Stashed changes
+
 }
 static inline __attribute__((always_inline)) void GAS_Scheduler_taskBackground(void)
 {
@@ -127,6 +123,11 @@ void HAL_SYSTICK_Callback(void)
 	if(gTimerCnt % 100 == 0)
 	{
 		gTask.flag_100ms=True;
+	}
+
+	if(gTimerCnt % 300 == 0)
+	{
+		gTask.flag_300ms=True;
 	}
 
 	if(gTimerCnt == 1000)
@@ -155,7 +156,11 @@ void GAS_Scheduler(void)
 		gTask.flag_100ms = False;
 		GAS_Scheduler_taskCounter_100ms();
 	}
-
+	if(gTask.flag_300ms == True)
+	{
+		gTask.flag_300ms = False;
+		GAS_Scheduler_taskCounter_300ms();
+	}
 	if(gTask.flag_1000ms == True)
 	{
 		gTask.flag_1000ms = False;
@@ -164,7 +169,4 @@ void GAS_Scheduler(void)
 
 	GAS_Scheduler_taskBackground();
 
-//	GAS_Can_recieveMessage(&hcan);
-//	HAL_CAN_IRQHandler(&hcan);
-//	  pin_state=HAL_GPIO_ReadPin(GPIO_PIN_8);
 }

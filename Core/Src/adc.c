@@ -47,13 +47,13 @@ void MX_ADC1_Init(void)
   hadc1.Instance = ADC1;
   hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
-  hadc1.Init.ScanConvMode = ENABLE;
+  hadc1.Init.ScanConvMode = DISABLE;
   hadc1.Init.ContinuousConvMode = ENABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc1.Init.NbrOfConversion = 6;
+  hadc1.Init.NbrOfConversion = 1;
   hadc1.Init.DMAContinuousRequests = ENABLE;
   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
@@ -62,63 +62,16 @@ void MX_ADC1_Init(void)
   }
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-<<<<<<< Updated upstream
-  sConfig.Channel = ADC_CHANNEL_0;
-=======
   sConfig.Channel = ADC_CHANNEL_3;
->>>>>>> Stashed changes
   sConfig.Rank = 1;
   sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-<<<<<<< Updated upstream
-  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
-  */
-  sConfig.Channel = ADC_CHANNEL_1;
-  sConfig.Rank = 2;
-  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
-  */
-  sConfig.Channel = ADC_CHANNEL_2;
-  sConfig.Rank = 3;
-  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
-  */
-  sConfig.Channel = ADC_CHANNEL_11;
-  sConfig.Rank = 4;
-  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
-  */
-  sConfig.Channel = ADC_CHANNEL_12;
-  sConfig.Rank = 5;
-  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
-  */
-  sConfig.Channel = ADC_CHANNEL_13;
-  sConfig.Rank = 6;
-  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-=======
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
->>>>>>> Stashed changes
 
 }
 /* ADC2 init function */
@@ -228,20 +181,9 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     /**ADC1 GPIO Configuration
-<<<<<<< Updated upstream
-    PC0     ------> ADC1_IN10
-    PC1     ------> ADC1_IN11
-    PC2     ------> ADC1_IN12
-    PC3     ------> ADC1_IN13
-    PA0-WKUP     ------> ADC1_IN0
-    PA1     ------> ADC1_IN1
-    PA2     ------> ADC1_IN2
-=======
->>>>>>> Stashed changes
     PA3     ------> ADC1_IN3
     PC4     ------> ADC1_IN14
     PC5     ------> ADC1_IN15
-    PB0     ------> ADC1_IN8
     PB1     ------> ADC1_IN9
     */
     GPIO_InitStruct.Pin = GPIO_PIN_3;
@@ -249,17 +191,12 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-<<<<<<< Updated upstream
-    GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
-                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7;
-=======
     GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
->>>>>>> Stashed changes
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
+    GPIO_InitStruct.Pin = GPIO_PIN_1;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -318,27 +255,9 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 
     __HAL_RCC_GPIOA_CLK_ENABLE();
     /**ADC3 GPIO Configuration
-<<<<<<< Updated upstream
-    PC0     ------> ADC3_IN10
-    PC1     ------> ADC3_IN11
-    PC2     ------> ADC3_IN12
-    PC3     ------> ADC3_IN13
-    PA0-WKUP     ------> ADC3_IN0
-    PA1     ------> ADC3_IN1
-    PA2     ------> ADC3_IN2
-    PA3     ------> ADC3_IN3
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3;
-    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3;
-=======
     PA3     ------> ADC3_IN3
     */
     GPIO_InitStruct.Pin = GPIO_PIN_3;
->>>>>>> Stashed changes
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -361,32 +280,16 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     __HAL_RCC_ADC1_CLK_DISABLE();
 
     /**ADC1 GPIO Configuration
-<<<<<<< Updated upstream
-    PC0     ------> ADC1_IN10
-    PC1     ------> ADC1_IN11
-    PC2     ------> ADC1_IN12
-    PC3     ------> ADC1_IN13
-    PA0-WKUP     ------> ADC1_IN0
-    PA1     ------> ADC1_IN1
-    PA2     ------> ADC1_IN2
-=======
->>>>>>> Stashed changes
     PA3     ------> ADC1_IN3
     PC4     ------> ADC1_IN14
     PC5     ------> ADC1_IN15
-    PB0     ------> ADC1_IN8
     PB1     ------> ADC1_IN9
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_3);
 
-<<<<<<< Updated upstream
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
-                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7);
-=======
     HAL_GPIO_DeInit(GPIOC, GPIO_PIN_4|GPIO_PIN_5);
->>>>>>> Stashed changes
 
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0|GPIO_PIN_1);
+    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_1);
 
     /* ADC1 DMA DeInit */
     HAL_DMA_DeInit(adcHandle->DMA_Handle);
@@ -420,24 +323,9 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     __HAL_RCC_ADC3_CLK_DISABLE();
 
     /**ADC3 GPIO Configuration
-<<<<<<< Updated upstream
-    PC0     ------> ADC3_IN10
-    PC1     ------> ADC3_IN11
-    PC2     ------> ADC3_IN12
-    PC3     ------> ADC3_IN13
-    PA0-WKUP     ------> ADC3_IN0
-    PA1     ------> ADC3_IN1
-    PA2     ------> ADC3_IN2
-    PA3     ------> ADC3_IN3
-    */
-    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
-
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
-=======
     PA3     ------> ADC3_IN3
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_3);
->>>>>>> Stashed changes
 
   /* USER CODE BEGIN ADC3_MspDeInit 1 */
 
