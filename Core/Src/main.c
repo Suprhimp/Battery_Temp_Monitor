@@ -175,10 +175,14 @@ void SystemClock_Config(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
+	HAL_GPIO_WritePin(LED0_GPIO_Port,LED0_Pin,1);
+	HAL_GPIO_WritePin(LED1_GPIO_Port,LED1_Pin,0);
+	HAL_GPIO_WritePin(LED2_GPIO_Port,LED2_Pin,0);
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1)
   {
+
   }
   /* USER CODE END Error_Handler_Debug */
 }

@@ -45,8 +45,29 @@ typedef union{
 
 }BatteryDiagnose_t;
 
+typedef union{
+	uint8_t TxData[8];
+	uint8_t RxData[8];
+	struct{
+		unsigned int HighestTemp : 12;
+		unsigned int LowestTemp : 12;
+		unsigned int MeanTemp : 12;
+		uint8_t prechargeStateSignal1 :1 ;
+		uint8_t prechargeStateSignal2 :1 ;
+		uint8_t RelayContactSignal1   :1 ;
+		uint8_t RelayContactSignal2	  :1 ;
+		uint8_t RelayContactSignal3	  :1 ;
+		uint8_t TsalSignal			  :1 ;
+		uint8_t IMDStatusFrequency	  :1 ;
+		uint8_t Reserved			  :1 ;
+		unsigned int Reserved2		  :20 ;
+	}__attribute__((aligned(1),packed)) B;
+
+}BatteryInfo_t;
+
 extern BatteryTemp_t T_BatteryTemp;
 extern BatteryDiagnose_t R_BatteryDiagnose;
+extern BatteryInfo_t T_BatteryInfo;
 
 extern void GAS_Can_init(void);
 

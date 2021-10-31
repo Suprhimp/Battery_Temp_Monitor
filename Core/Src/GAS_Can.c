@@ -16,6 +16,8 @@ CAN_TxHeaderTypeDef canTxHeader2;
 uint8_t canRx0Data[8];
 uint32_t TxMailBox;
 
+BatteryTemp_t T_BatteryTemp;
+BatteryInfo_t T_BatteryInfo;
 BatteryDiagnose_t R_BatteryDiagnose;
 uint32_t STM32_ID = 0x32F103A;
 uint32_t STM32_ID2 = 0x32F103B;
@@ -70,7 +72,7 @@ void GAS_Can_rxSetting(void)
 	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
 	sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
 	sFilterConfig.FilterActivation = ENABLE;
-	sFilterConfig.SlaveStartFilterBank = 14;
+	sFilterConfig.SlaveStartFilterBank = 0;
 
 	 if (HAL_CAN_ConfigFilter(&hcan1, &sFilterConfig) != HAL_OK)
 	  {
@@ -83,11 +85,11 @@ void GAS_Can_rxSetting(void)
 	 sFilterConfig2.FilterMaskIdHigh = (0x0fffffff<<3)>>16;
  	 sFilterConfig2.FilterMaskIdLow = (0xffff & (0x0FFFFFFF << 3)) | (1<<2);
 	 sFilterConfig2.FilterFIFOAssignment = CAN_RX_FIFO1;
-	 sFilterConfig2.FilterBank = 1;
+	 sFilterConfig2.FilterBank = 14;
 	 sFilterConfig2.FilterMode = CAN_FILTERMODE_IDMASK;
 	 sFilterConfig2.FilterScale = CAN_FILTERSCALE_32BIT;
 	 sFilterConfig2.FilterActivation = ENABLE;
-	 sFilterConfig2.SlaveStartFilterBank = 15;
+	 sFilterConfig2.SlaveStartFilterBank = 14;
 
 	 if (HAL_CAN_ConfigFilter(&hcan2, &sFilterConfig2) != HAL_OK)
 	 {
@@ -149,5 +151,18 @@ void GAS_Can_sendMessage_2(uint8_t Data[])
 
 }
 
+void GAS_BatteryInfoPass(){
+	T_BatteryInfo.B.HighestTemp =T_BatteryTemp.B.HighestTemp;
+	T_BatteryInfo.B.LowestTemp =T_BatteryTemp.B.LowestTemp;
+	T_BatteryInfo.B.MeanTemp =T_BatteryTemp.B.MeanTemp;
+	T_BatteryInfo.B. prechargeStateSignal1 = R_BatteryDiagnose.B.prechargeStateSignal1;
+	T_BatteryInfo.B. prechargeStateSignal2 = R_BatteryDiagnose.B.prechargeStateSignal2;
+	T_BatteryInfo.B. RelayContactSignal1 = R_BatteryDiagnose.B.RelayContactSignal1;
+	T_BatteryInfo.B. RelayContactSignal2 = R_BatteryDiagnose.B.RelayContactSignal2;
+	T_BatteryInfo.B. RelayContactSignal3 = R_BatteryDiagnose.B.RelayContactSignal3;
+	T_BatteryInfo.B. TsalSignal = R_BatteryDiagnose.B.TsalSignal;
+	T_BatteryInfo.B. IMDStatusFrequency = R_BatteryDiagnose.B.IMDStatusFrequency;
 
+	GAS_Can_sendMessage_2(T_BatteryInfo.TxData);
+}
 

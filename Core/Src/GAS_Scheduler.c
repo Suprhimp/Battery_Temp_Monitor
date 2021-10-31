@@ -96,7 +96,7 @@ static inline __attribute__((always_inline)) void GAS_Scheduler_taskCounter_1000
 
 	HAL_GPIO_TogglePin(LED0_GPIO_Port,LED0_Pin);
 	HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin);
-	HAL_GPIO_TogglePin(LED2_GPIO_Port,LED2_Pin);
+
 
 #ifdef INVCON_TEST
 	InverterControl_test_1000ms();
