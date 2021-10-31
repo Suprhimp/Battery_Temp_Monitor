@@ -60,7 +60,7 @@ typedef union{
 		uint8_t TsalSignal			  :1 ;
 		uint8_t IMDStatusFrequency	  :1 ;
 		uint8_t Reserved			  :1 ;
-		unsigned int Reserved2		  :20 ;
+		uint32_t Reserved2		  :20 ;
 	}__attribute__((aligned(1),packed)) B;
 
 }BatteryInfo_t;

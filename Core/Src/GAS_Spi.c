@@ -18,7 +18,7 @@ uint16_t GAS_Spi_TransmitReceive(unsigned short data){
 
 	//TODO: CS select
 	HAL_GPIO_WritePin(SPI3_CS_GPIO_Port, SPI3_CS_Pin, GPIO_PIN_RESET);
-//	HAL_GPIO_WritePin(SPI3_CS_GPIO_Port, SPI3_CS_Pin, GPIO_PIN_RESET);
+
 	buff[0] = 0x06|((data & 0x07)>>2);
 	buff[1] = ((data&0x07)<<6);
 	buff[2] = 0;

@@ -67,7 +67,7 @@ static inline __attribute__((always_inline)) void GAS_Scheduler_taskCounter_1ms(
 static inline __attribute__((always_inline)) void GAS_Scheduler_taskCounter_10ms(void)
 {
 //	GAS_Can_sendMessage();
-
+	GAS_Can_sendMessage_Temp();
 }
 
 uint8_t Count300ms = 0;

@@ -68,11 +68,11 @@ void GAS_Can_rxSetting(void)
 	sFilterConfig.FilterMaskIdHigh = (0x0fffffff<<3)>>16;
 	sFilterConfig.FilterMaskIdLow =(0xffff & (0x0FFFFFFF << 3)) | (1<<2);
 	sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
-	sFilterConfig.FilterBank = 0;
+	sFilterConfig.FilterBank = 1;
 	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
 	sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
 	sFilterConfig.FilterActivation = ENABLE;
-	sFilterConfig.SlaveStartFilterBank = 0;
+	sFilterConfig.SlaveStartFilterBank = 1;
 
 	 if (HAL_CAN_ConfigFilter(&hcan1, &sFilterConfig) != HAL_OK)
 	  {
@@ -123,6 +123,19 @@ void GAS_Can_init(void)
 
 }
 
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
+{
+	/*
+	 * CAN recieve data interrupt function
+	 * Check Instance then recieve data in stm32_2.RxData
+	 */
+	if(hcan->Instance == CAN1)
+	{
+		HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &canRxHeader, R_BatteryDiagnose.RxData);
+
+	}
+}
+
 void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
 	/*
@@ -131,7 +144,7 @@ void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	 */
 	if(hcan->Instance == CAN2)
 	{
-		HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &canRxHeader, R_BatteryDiagnose.RxData);
+		HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO1, &canRxHeader, R_BatteryDiagnose.RxData);
 
 	}
 }
@@ -144,26 +157,26 @@ void GAS_Can_sendMessage_1( uint8_t Data[])
 
 }
 
-void GAS_Can_sendMessage_2(uint8_t Data[])
+void GAS_Can_sendMessage_Temp()
 {
 
-	TxMailBox = HAL_CAN_GetTxMailboxesFreeLevel(&hcan2);
-	HAL_CAN_AddTxMessage(&hcan2, &canTxHeader2, &Data[0], &TxMailBox);
+	TxMailBox = HAL_CAN_GetTxMailboxesFreeLevel(&hcan1);
+	HAL_CAN_AddTxMessage(&hcan1, &canTxHeader2, &T_BatteryTemp.TxData[0], &TxMailBox);
 
 }
 
-void GAS_BatteryInfoPass(){
-	T_BatteryInfo.B.HighestTemp =T_BatteryTemp.B.HighestTemp;
-	T_BatteryInfo.B.LowestTemp =T_BatteryTemp.B.LowestTemp;
-	T_BatteryInfo.B.MeanTemp =T_BatteryTemp.B.MeanTemp;
-	T_BatteryInfo.B. prechargeStateSignal1 = R_BatteryDiagnose.B.prechargeStateSignal1;
-	T_BatteryInfo.B. prechargeStateSignal2 = R_BatteryDiagnose.B.prechargeStateSignal2;
-	T_BatteryInfo.B. RelayContactSignal1 = R_BatteryDiagnose.B.RelayContactSignal1;
-	T_BatteryInfo.B. RelayContactSignal2 = R_BatteryDiagnose.B.RelayContactSignal2;
-	T_BatteryInfo.B. RelayContactSignal3 = R_BatteryDiagnose.B.RelayContactSignal3;
-	T_BatteryInfo.B. TsalSignal = R_BatteryDiagnose.B.TsalSignal;
-	T_BatteryInfo.B. IMDStatusFrequency = R_BatteryDiagnose.B.IMDStatusFrequency;
-
-	GAS_Can_sendMessage_2(T_BatteryInfo.TxData);
-}
+//void GAS_BatteryInfoPass(){
+//	T_BatteryInfo.B.HighestTemp =T_BatteryTemp.B.HighestTemp;
+//	T_BatteryInfo.B.LowestTemp =T_BatteryTemp.B.LowestTemp;
+//	T_BatteryInfo.B.MeanTemp =T_BatteryTemp.B.MeanTemp;
+//	T_BatteryInfo.B. prechargeStateSignal1 = R_BatteryDiagnose.B.prechargeStateSignal1;
+//	T_BatteryInfo.B. prechargeStateSignal2 = R_BatteryDiagnose.B.prechargeStateSignal2;
+//	T_BatteryInfo.B. RelayContactSignal1 = R_BatteryDiagnose.B.RelayContactSignal1;
+//	T_BatteryInfo.B. RelayContactSignal2 = R_BatteryDiagnose.B.RelayContactSignal2;
+//	T_BatteryInfo.B. RelayContactSignal3 = R_BatteryDiagnose.B.RelayContactSignal3;
+//	T_BatteryInfo.B. TsalSignal = R_BatteryDiagnose.B.TsalSignal;
+//	T_BatteryInfo.B. IMDStatusFrequency = R_BatteryDiagnose.B.IMDStatusFrequency;
+//
+//	GAS_Can_sendMessage_2(T_BatteryInfo.TxData);
+//}
 
