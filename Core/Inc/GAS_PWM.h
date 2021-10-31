@@ -9,7 +9,7 @@
 #define INC_GAS_PWM_H_
 
 #include "tim.h"
-#include "stm32f4xx_hal_tim.h"
+#include "stm32f4xx_hal.h"
 typedef struct{
 	uint32_t RisingEdgeValue;
 	uint32_t FallingEdgeValue;

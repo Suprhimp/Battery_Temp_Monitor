@@ -106,18 +106,19 @@ void GAS_Can_init(void)
 	GAS_Can_txSetting();
 	GAS_Can_rxSetting();
 //
+//	HAL_CAN_Stop(&hcan2);
 	HAL_CAN_Start(&hcan1);
-	HAL_CAN_Start(&hcan2);
+//	HAL_CAN_Start(&hcan2);
 //
-//	if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
-//	{
-//	  Error_Handler();
-//	}
-//
-	if (HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO1_MSG_PENDING) != HAL_OK)
+	if (HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
 	{
 	  Error_Handler();
 	}
+//
+//	if (HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO1_MSG_PENDING) != HAL_OK)
+//	{
+//	  Error_Handler();
+//	}
 
 
 }

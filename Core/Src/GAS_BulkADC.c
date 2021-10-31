@@ -18,19 +18,19 @@ void GAS_BulkADC_run_100ms(uint8_t CScount){
 //	HAL_GPIO_WritePin(SPI_AD0_GPIO_Port,SPI_AD0_Pin,CScount&0b001);
 //	HAL_GPIO_WritePin(SPI_AD1_GPIO_Port,SPI_AD1_Pin,CScount&0b010);
 //	HAL_GPIO_WritePin(SPI_AD2_GPIO_Port,SPI_AD2_Pin,CScount&0b100);
-	HAL_GPIO_WritePin(SPI_AD0_GPIO_Port,SPI_AD0_Pin,1);
-	HAL_GPIO_WritePin(SPI_AD1_GPIO_Port,SPI_AD1_Pin,0);
-	HAL_GPIO_WritePin(SPI_AD2_GPIO_Port,SPI_AD2_Pin,1);
+//	HAL_GPIO_WritePin(SPI_AD0_GPIO_Port,SPI_AD0_Pin,1);
+//	HAL_GPIO_WritePin(SPI_AD1_GPIO_Port,SPI_AD1_Pin,1);
+//	HAL_GPIO_WritePin(SPI_AD2_GPIO_Port,SPI_AD2_Pin,0);
 		GAS_Spi_getAll(MCP3208);
 
 		for(uint8_t i =0;i<8;i++){
-			CellTemp[i] = MCP3208[i];
-//			CellTemp[i+(CScount-1)*8] = MCP3208[i];
+//			CellTemp[i] = MCP3208[i];
+			CellTemp[i+(CScount-1)*8] = MCP3208[i];
 		}
 
-		HAL_GPIO_WritePin(SPI_AD0_GPIO_Port,SPI_AD0_Pin,0);
-		HAL_GPIO_WritePin(SPI_AD1_GPIO_Port,SPI_AD1_Pin,0);
-		HAL_GPIO_WritePin(SPI_AD2_GPIO_Port,SPI_AD2_Pin,0);
+//		HAL_GPIO_WritePin(SPI_AD0_GPIO_Port,SPI_AD0_Pin,0);
+//		HAL_GPIO_WritePin(SPI_AD1_GPIO_Port,SPI_AD1_Pin,0);
+//		HAL_GPIO_WritePin(SPI_AD2_GPIO_Port,SPI_AD2_Pin,0);
 
 }
 
@@ -47,12 +47,16 @@ void GAS_BulkADC_Calc(){
 	uint16_t Min = 0xffff;
 
 	for(int i=0;i<48;i++){
-		Total += CellTemp[i];
-		if (CellTemp[i] > Max){
-			Max = CellTemp[i];
+		if (CellTemp[i]<100 || CellTemp[i]>4000){
+			continue;
 		}
-		if (CellTemp[i] < Min){
-			Min = CellTemp[i];
+		unsigned int parsedTemp = CellTemp[i] ;
+		Total += parsedTemp;
+		if (parsedTemp > Max){
+			Max = parsedTemp;
+		}
+		if (parsedTemp < Min){
+			Min = parsedTemp;
 		}
 	}
 

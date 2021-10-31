@@ -74,21 +74,31 @@ uint8_t Count300ms = 0;
 uint8_t CScount = 0;
 static inline __attribute__((always_inline)) void GAS_Scheduler_taskCounter_100ms(void)
 {
-	Count300ms += 1;
-	CScount+=1;
-//	if (Count300ms%2)
-//	GAS_BulkADC_select(CScount);
-//	else
-	GAS_BulkADC_run_100ms(CScount);
 
-	if(CScount>9)CScount=0;
-		Count300ms = 0;
+
+//	if (Count300ms%2){
+//		CScount+=1;
+//		GAS_BulkADC_select(CScount);
+//	}else
+
+
 
 
 }
 
 static inline __attribute__((always_inline)) void GAS_Scheduler_taskCounter_300ms(void)
 {
+	Count300ms += 1;
+	if (Count300ms%2){
+		CScount+=1;
+		GAS_BulkADC_select(CScount);
+	}else{
+		GAS_BulkADC_run_100ms(CScount);
+		Count300ms = 0;
+	}
+
+	if(CScount>9)CScount=0;
+
 
 }
 static inline __attribute__((always_inline)) void GAS_Scheduler_taskCounter_1000ms(void)
