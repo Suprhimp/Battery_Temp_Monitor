@@ -15,6 +15,7 @@ CAN_TxHeaderTypeDef canTxHeader;
 CAN_TxHeaderTypeDef canTxHeader2;
 uint8_t canRx0Data[8];
 uint32_t TxMailBox;
+uint32_t TxMailBox2;
 
 BatteryTemp_t T_BatteryTemp;
 BatteryInfo_t T_BatteryInfo;
@@ -80,22 +81,22 @@ void GAS_Can_rxSetting(void)
 	    Error_Handler();
 	  }
 
-	 sFilterConfig2.FilterIdHigh =  (R_BatteryFanCnt<<3)>>16;
-	 sFilterConfig2.FilterIdLow = (0xffff & (R_BatteryFanCnt << 3)) | (1<<2);
-	 sFilterConfig2.FilterMaskIdHigh = (0x0fffffff<<3)>>16;
- 	 sFilterConfig2.FilterMaskIdLow = (0xffff & (0x0FFFFFFF << 3)) | (1<<2);
-	 sFilterConfig2.FilterFIFOAssignment = CAN_RX_FIFO1;
-	 sFilterConfig2.FilterBank = 15;
-	 sFilterConfig2.FilterMode = CAN_FILTERMODE_IDMASK;
-	 sFilterConfig2.FilterScale = CAN_FILTERSCALE_32BIT;
-	 sFilterConfig2.FilterActivation = ENABLE;
-	 sFilterConfig2.SlaveStartFilterBank = 15;
-
-	 if (HAL_CAN_ConfigFilter(&hcan2, &sFilterConfig2) != HAL_OK)
-	 {
-	     /* Filter configuration Error */
-	     Error_Handler();
-	 }
+//	 sFilterConfig2.FilterIdHigh =  (R_BatteryFanCnt<<3)>>16;
+//	 sFilterConfig2.FilterIdLow = (0xffff & (R_BatteryFanCnt << 3)) | (1<<2);
+//	 sFilterConfig2.FilterMaskIdHigh = (0x0fffffff<<3)>>16;
+// 	 sFilterConfig2.FilterMaskIdLow = (0xffff & (0x0FFFFFFF << 3)) | (1<<2);
+//	 sFilterConfig2.FilterFIFOAssignment = CAN_RX_FIFO1;
+//	 sFilterConfig2.FilterBank = 15;
+//	 sFilterConfig2.FilterMode = CAN_FILTERMODE_IDMASK;
+//	 sFilterConfig2.FilterScale = CAN_FILTERSCALE_32BIT;
+//	 sFilterConfig2.FilterActivation = ENABLE;
+//	 sFilterConfig2.SlaveStartFilterBank = 15;
+//
+//	 if (HAL_CAN_ConfigFilter(&hcan2, &sFilterConfig2) != HAL_OK)
+//	 {
+//	     /* Filter configuration Error */
+//	     Error_Handler();
+//	 }
 
 }
 
@@ -108,17 +109,17 @@ void GAS_Can_init(void)
 //
 
 	HAL_CAN_Start(&hcan1);
-	HAL_CAN_Start(&hcan2);
+//	HAL_CAN_Start(&hcan2);
 //
 	if (HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
 	{
 	  Error_Handler();
 	}
 //
-	if (HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO1_MSG_PENDING) != HAL_OK)
-	{
-	  Error_Handler();
-	}
+//	if (HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO1_MSG_PENDING) != HAL_OK)
+//	{
+//	  Error_Handler();
+//	}
 
 
 }
@@ -136,32 +137,32 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	}
 }
 
-void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan)
-{
-	/*
-	 * CAN recieve data interrupt function
-	 * Check Instance then recieve data in stm32_2.RxData
-	 */
-	if(hcan->Instance == CAN2)
-	{
-		HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO1, &canRxHeader, R_BatteryDiagnose.RxData);
+//void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef *hcan)
+//{
+//	/*
+//	 * CAN recieve data interrupt function
+//	 * Check Instance then recieve data in stm32_2.RxData
+//	 */
+//	if(hcan->Instance == CAN2)
+//	{
+//		HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO1, &canRxHeader, R_BatteryDiagnose.RxData);
+//
+//	}
+//}
 
-	}
-}
-
-void GAS_Can_sendMessage_1( uint8_t Data[])
-{
-
-	TxMailBox = HAL_CAN_GetTxMailboxesFreeLevel(&hcan1);
-	HAL_CAN_AddTxMessage(&hcan1, &canTxHeader, &Data[0], &TxMailBox);
-
-}
+//void GAS_Can_sendMessage_1( uint8_t Data[])
+//{
+//
+//	TxMailBox = HAL_CAN_GetTxMailboxesFreeLevel(&hcan1);
+//	HAL_CAN_AddTxMessage(&hcan1, &canTxHeader, &Data[0], &TxMailBox);
+//
+//}
 
 void GAS_Can_sendMessage_Temp()
 {
 
-	TxMailBox = HAL_CAN_GetTxMailboxesFreeLevel(&hcan1);
-	HAL_CAN_AddTxMessage(&hcan1, &canTxHeader2, &T_BatteryTemp.TxData[0], &TxMailBox);
+	TxMailBox2 = HAL_CAN_GetTxMailboxesFreeLevel(&hcan1);
+	HAL_CAN_AddTxMessage(&hcan1, &canTxHeader2, &T_BatteryTemp.TxData[0], &TxMailBox2);
 
 }
 

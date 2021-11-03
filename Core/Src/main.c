@@ -95,7 +95,6 @@ int main(void)
   MX_ADC1_Init();
   MX_ADC2_Init();
   MX_ADC3_Init();
-  MX_CAN2_Init();
   MX_CRC_Init();
   MX_TIM3_Init();
   MX_TIM12_Init();
