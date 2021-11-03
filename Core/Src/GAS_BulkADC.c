@@ -17,7 +17,7 @@ void GAS_BulkADC_Calc();
 static float tempFunc(uint16_t inputTemp){
 	const float a = (float)(1.0)/3984000;
 	float answer = (float)(1.0/(a*log((4095.0/(float)inputTemp)-1)+1.0/298.15)-273.15);
-	return answer;
+	return answer*10;
 }
 
 void GAS_BulkADC_run_100ms(uint8_t CScount){
@@ -69,7 +69,7 @@ void GAS_BulkADC_Calc(){
 	T_BatteryTemp.B.HighestTemp = Max;
 	T_BatteryTemp.B.LowestTemp = Min;
 	T_BatteryTemp.B.MeanTemp = (int)(((float)Total)/count);
-	if (Max < 58){
+	if (Max > 58){
 		HAL_GPIO_WritePin(TEMP_OK_GPIO_Port, TEMP_OK_Pin, GPIO_PIN_RESET);
 	}
 }

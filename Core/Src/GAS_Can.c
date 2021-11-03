@@ -85,11 +85,11 @@ void GAS_Can_rxSetting(void)
 	 sFilterConfig2.FilterMaskIdHigh = (0x0fffffff<<3)>>16;
  	 sFilterConfig2.FilterMaskIdLow = (0xffff & (0x0FFFFFFF << 3)) | (1<<2);
 	 sFilterConfig2.FilterFIFOAssignment = CAN_RX_FIFO1;
-	 sFilterConfig2.FilterBank = 14;
+	 sFilterConfig2.FilterBank = 15;
 	 sFilterConfig2.FilterMode = CAN_FILTERMODE_IDMASK;
 	 sFilterConfig2.FilterScale = CAN_FILTERSCALE_32BIT;
 	 sFilterConfig2.FilterActivation = ENABLE;
-	 sFilterConfig2.SlaveStartFilterBank = 14;
+	 sFilterConfig2.SlaveStartFilterBank = 15;
 
 	 if (HAL_CAN_ConfigFilter(&hcan2, &sFilterConfig2) != HAL_OK)
 	 {
@@ -106,19 +106,19 @@ void GAS_Can_init(void)
 	GAS_Can_txSetting();
 	GAS_Can_rxSetting();
 //
-//	HAL_CAN_Stop(&hcan2);
+
 	HAL_CAN_Start(&hcan1);
-//	HAL_CAN_Start(&hcan2);
+	HAL_CAN_Start(&hcan2);
 //
 	if (HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
 	{
 	  Error_Handler();
 	}
 //
-//	if (HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO1_MSG_PENDING) != HAL_OK)
-//	{
-//	  Error_Handler();
-//	}
+	if (HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO1_MSG_PENDING) != HAL_OK)
+	{
+	  Error_Handler();
+	}
 
 
 }
