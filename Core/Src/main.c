@@ -100,6 +100,7 @@ int main(void)
   MX_TIM12_Init();
   MX_CAN1_Init();
   MX_SPI3_Init();
+  MX_CAN2_Init();
   /* USER CODE BEGIN 2 */
   GAS_Scheduler_init();
   /* USER CODE END 2 */
