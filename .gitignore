@@ -1,7 +1,6 @@
 
 .mxproject
 .mxproject
-*.ioc
 .mxproject
 Debug/makefile
 *.list
